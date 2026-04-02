@@ -10,6 +10,57 @@
     --color-second: #F59E0B;
     --color-txtClr: #1A1A1A;
     --color-brdClr: #E5E7EB;
+
+    /* animation */
+    --animate-fade-in: fade-in-scale 0.6s ease-in-out backwards;
+    --animate-open-overlay: open-overlay 0.3s ease-in-out;
+    --animate-open-menu: open-menu 0.3s ease-in-out;
+
+    @keyframes fade-in-scale {
+        0% {
+            opacity: 0;
+            transform: translateY(64px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+    @keyframes turn-to-view {
+        0% {
+            transform: scaleX(0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes open-menu {
+        0% {
+            width: 0;
+        }
+
+        100% {
+            width: 45%;
+        }
+    }
+
+    /* for the gray part beside menu */
+    @keyframes open-overlay {
+        0% {
+            opacity: 0
+        }
+
+        100% {
+            opacity: 1
+        }
+    }
 }
 
 
@@ -20,4 +71,35 @@ body {
 
 .linkBtn {
     @apply p-0 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-black after:transition-all after:duration-300 after:ease-in hover:after:w-full;
+}
+
+@layer utilities {
+    .border-transition {
+        @apply transition-colors duration-500 ease-in-out;
+    }
+
+    .form {
+        @apply flex flex-col gap-5 p-8 bg-stone-50 rounded-lg flex-1 w-sm shadow-lg;
+    }
+
+    .form p {
+        @apply flex flex-col gap-3;
+    }
+
+    .form input {
+        @apply outline-none border border-brdClr h-10 w-full pl-2.5 rounded-sm focus:border-primary;
+    }
+
+    .form .submitBtn {
+        @apply bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease-in-out cursor-pointer;
+    }
+
+    .dateTag {
+        @apply w-fit p-1.5 rounded-lg text-sm font-bold tracking-wide text-[#B45309] bg-[#FEF3C7];
+    }
+
+    .btnsMenu>* {
+        @apply flex items-center gap-2 text-lg text-txtClr stroke-gray-400
+    }
+
 }
