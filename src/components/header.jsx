@@ -1,6 +1,7 @@
 // components
 import { Logo } from "./Logo"
 import DropDownMenu from "./DropDownMenu"
+import LinkBtn from "./LinkBtn"
 
 // icons 
 import { Menu } from "lucide-react"
@@ -35,6 +36,22 @@ const HamburgerMenu = () => {
     )
 }
 
+const Btns = () => {
+
+    return (
+        <div className="flex items-center gap-8 text-lg">
+            <LinkBtn to={'/'}>Home</LinkBtn>
+            <LinkBtn to={'/newpost'}>New Post</LinkBtn>
+
+            <button
+                className="bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
+            >
+                Log out
+            </button>
+
+        </div>
+    )
+}
 
 const Header = () => {
     const isMobile = useMediaQuery({
@@ -48,13 +65,9 @@ const Header = () => {
             {
                 isMobile
                     ? <HamburgerMenu />
-                    : <h2>yes is big</h2>
+                    : <Btns />
             }
-            {/* {
-                isMobile
-                    ? <HamburgerMenu handleLogout={handleLogout} isOpen={isOpen} setIsOpen={setIsOpen} />
-                    : <Btns handleLogout={handleLogout} />
-            } */}
+
         </div>
     )
 }
