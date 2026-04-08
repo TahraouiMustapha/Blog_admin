@@ -3,10 +3,12 @@ import Header from "./components/header"
 import Footer from "./components/footer"
 import Login from "./pages/Login"
 import { Outlet } from "react-router"
-import { useState } from "react"
+
+// hooks
+import useGetAdmin from "./hooks/useGetAdmin"
 
 function App() {
-  const [admin, setAdmin] = useState(null)
+  const { admin, setAdmin } = useGetAdmin()
 
 
   return (
