@@ -1,70 +1,47 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const useGetAdmin = () => {
     const [admin, setAdmin] = useState(null)
+    const [accessToken, setAccessToken] = useState(sessionStorage.getItem('accessToken'))
 
-    const accessToken = sessionStorage.getItem('accessToken')
+    useEffect(() => {
+        if (!accessToken) return;
 
-    if (accessToken) {
-        useEffect(() => {
+        const controller = new AbortController()
 
-            const fetchAdmin = async () => {
-                try {
-                    const res = await fetch('http://localhost:3000/api/users/me', {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${accessToken}`
-                        },
-                    })
+        async function fetchAdmin() {
+            try {
+                const response = await fetch('/api/users/me', {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`
+                    },
+                    signal: controller.signal
+                })
 
-                    if (!res.ok) {
-                        if (res.status == 401) {
-                            const response = await res.json()
-                            const errorMsg = response.error
-                            console.log('error: ', errorMsg)
-                            if (errorMsg == "Token expired") {
-                                // refresh token
-                                const refreshRes = await fetch('http://localhost:3000/api/auth/refresh', {
-                                    method: "POST",
-                                    credentials: "include"
-                                })
-
-                                if (refreshRes.ok) {
-                                    console.log('good')
-                                    // store the accessTokenin sessionStorage
-
-                                    // getAdmin user (fetchAdmin)
-
-                                } else {
-                                    //  just for making refresh token stored 
-                                    console.log('refresh failed')
-                                }
-                            }
-
-                        }
-                    } else {
-                        const response = await res.json()
-                        const { user } = response.data
-                        setAdmin(user)
-                    }
-
-
-                } catch (err) {
-                    console.log('err ', err)
-                } finally {
-                    console.log('fin')
+                if (!response.ok) {
+                    throw new Error('failed to fetch admin')
                 }
+
+                const data = await response.json()
+                setAdmin(data.data.user)
+
+            } catch (err) {
+                if (err.name === 'AbortError') {
+                    // avoid the warning of abort 
+                    return;
+                }
+                console.error(err)
             }
+        }
 
-            fetchAdmin()
+        fetchAdmin()
 
-        }, [])
-    }
-
+        return () => controller.abort()
+    }, [])
 
     return { admin, setAdmin }
 }
-
 
 export default useGetAdmin;
