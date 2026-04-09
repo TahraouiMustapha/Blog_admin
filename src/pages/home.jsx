@@ -1,6 +1,11 @@
+// components 
+import PostsContainer from "../components/PostsContainer";
+
 const Home = () => {
     return (
-        <h2>HOme </h2>
+        <div className="flex-1">
+            <PostsContainer />
+        </div>
     )
 }
 
