@@ -17,7 +17,7 @@ const Login = ({ setAdmin }) => {
         }
 
         try {
-            const res = await fetch('http://localhost:3000/api/admin/auth', {
+            const res = await fetch('/api/admin/auth', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -46,7 +46,7 @@ const Login = ({ setAdmin }) => {
 
 
             // get Admin 
-            const resGetAdmin = await fetch('http://localhost:3000/api/users/me', {
+            const resGetAdmin = await fetch('http/api/users/me', {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${accessToken}`
