@@ -46,7 +46,7 @@ const Login = ({ setAdmin }) => {
 
 
             // get Admin 
-            const resGetAdmin = await fetch('http/api/users/me', {
+            const resGetAdmin = await fetch('/api/users/me', {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${accessToken}`
