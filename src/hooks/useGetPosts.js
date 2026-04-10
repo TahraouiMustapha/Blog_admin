@@ -6,6 +6,9 @@ const useGetPosts = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        const accessToken = sessionStorage.getItem('accessToken')
+        if (!accessToken) return;
+
         const controller = new AbortController()
 
         setLoading(true)
@@ -13,7 +16,12 @@ const useGetPosts = () => {
 
         const fetchPosts = async () => {
             try {
-                const response = await fetch('/api/posts', { signal: controller.signal })
+                const response = await fetch('/api/admin/posts', {
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`
+                    },
+                    signal: controller.signal
+                })
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch posts')
