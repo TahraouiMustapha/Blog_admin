@@ -1,16 +1,60 @@
-import { useParams } from "react-router"
 import useGetPostWithComments from "../hooks/useGetPostWithComments"
 
 import { format } from "date-fns"
 
-const Comment = ({ comment }) => {
+// hooks
+import { useParams } from "react-router"
+import { useState } from "react"
+
+const Comment = ({ comment, setPostWithComments }) => {
+    const [loading, setLoading] = useState(false)
     const date = format(comment.date, "do LLL yyyy")
+
+
+    const handleDeleteClick = async () => {
+        const accessToken = sessionStorage.getItem('accessToken')
+        if (!accessToken) return;
+
+        try {
+            setLoading(true)
+            const response = await fetch(`/api/posts/${comment.postId}/comments/${comment.commentId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`
+                }
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to delete comment")
+            }
+
+            setPostWithComments((prev) => ({
+                ...prev,
+                comments: prev.comments.filter((currentComment) => currentComment.commentId !== comment.commentId)
+            }))
+
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setLoading(false)
+        }
+
+    }
+
+
 
     return (
         <div className="border border-brdClr rounded-md p-3">
-            <div className="flex items-center gap-5 mb-2">
+            <div className="flex justify-between items-center gap-5 mb-2">
                 <p className="text-primary text-lg">{comment.username}</p>
-                <p className="dateTag ml-auto mr-2">{date}</p>
+                <p className="dateTag  mr-2">{date}</p>
+                <button
+                    disabled={loading}
+                    onClick={handleDeleteClick}
+                    className="bg-primary text-white p-2 w-20 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer mr-8"
+                >
+                    delete
+                </button>
             </div>
 
             <div>
@@ -52,7 +96,7 @@ const PostPage = () => {
             <div className="p-5 md:px-8 lg:px-24 xl:px-9 flex flex-col gap-6 border-t border-t-brdClr">
                 <p className="text-3xl font-semibold text-txtClr ">Comments({comments?.length})</p>
                 <div className="flex flex-col gap-4">
-                    {comments?.map(comment => <Comment key={comment.commentId} comment={comment} />)}
+                    {comments?.map(comment => <Comment key={comment.commentId} comment={comment} setPostWithComments={setPostWithComments} />)}
                 </div>
             </div>
 
