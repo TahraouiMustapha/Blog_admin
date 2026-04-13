@@ -9,7 +9,11 @@ import { Menu } from "lucide-react"
 // hooks
 import { useMediaQuery } from 'react-responsive'
 import { useState, useRef } from "react"
-import { useLocation } from "react-router"
+import { useLocation, useNavigate } from "react-router"
+import { useContext } from "react"
+
+//context
+import { HeaderContext } from "../context/headerContext"
 
 const HamburgerMenu = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -37,6 +41,9 @@ const HamburgerMenu = () => {
 }
 
 const Btns = () => {
+    const context = useContext(HeaderContext)
+    const [loading, setLoading] = useState(false)
+
 
     return (
         <div className="flex items-center gap-8 text-lg">
@@ -44,6 +51,12 @@ const Btns = () => {
             <LinkBtn to={'/newpost'}>New Post</LinkBtn>
 
             <button
+                disabled={loading}
+                onClick={async () => {
+                    setLoading(true)
+                    await context.logout()
+                    setLoading(false)
+                }}
                 className="bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
             >
                 Log out
