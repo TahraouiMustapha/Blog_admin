@@ -30,56 +30,36 @@ const DropDownMenu = ({ handleClick }) => {
                     <Logo />
                 </div>
 
-                <div className="grid h-[33%] auto-rows-fr btnsMenu">
-                    <div>
-                        <House />
-                        <LinkBtn to={'/'}>Home</LinkBtn>
-                    </div>
-                    <div>
-                        <Info />
-                        <LinkBtn to={'/newpost'}>New Post</LinkBtn>
-                    </div>
+                {context.admin
+                    ? <div className="grid h-[33%] auto-rows-fr btnsMenu">
+                        <div>
+                            <House />
+                            <LinkBtn to={'/'}>Home</LinkBtn>
+                        </div>
+                        <div>
+                            <Info />
+                            <LinkBtn to={'/newpost'}>New Post</LinkBtn>
+                        </div>
 
-                    {/* before auth */}
-                    <div className="">
-                        <LogOut />
-                        <button
-                            disabled={loading}
-                            onClick={async () => {
-                                setLoading(true)
-                                await context.logout()
-                                setLoading(false)
-                                handleClick()
-                            }}
-                            className="rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
-                        >
-                            {loading ? 'Logging out ..' : 'Logout'}
-                        </button>
-                    </div>
+                        {/* before auth */}
+                        <div className="">
+                            <LogOut />
+                            <button
+                                disabled={loading}
+                                onClick={async () => {
+                                    setLoading(true)
+                                    await context.logout()
+                                    setLoading(false)
+                                    handleClick()
+                                }}
+                                className="rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
+                            >
+                                {loading ? 'Logging out ..' : 'Logout'}
+                            </button>
+                        </div>
 
-                    {/* {
-                        authUser
-                            ? (
-                                <div>
-                                    <LogOut />
-                                    <button
-                                        onClick={handleLogout}
-                                        className="p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
-                                    >
-                                        Log out
-                                    </button>
-                                </div>
-                            ) : (<>
-                                <div>
-                                    <LogIn />
-                                    <LinkBtn to={'/signin'}>Login</LinkBtn>
-                                </div>
-                                <div>
-                                    <PrimaryBtn to={'/signup'}>Sign Up</PrimaryBtn>
-                                </div>
-                            </>)
-                    } */}
-                </div>
+                    </div>
+                    : 'Log in first!'}
             </div>
         </div>
     )

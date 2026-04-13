@@ -39,9 +39,8 @@ function App() {
 
   return (
     <div className="font-rob min-h-screen w-full flex flex-col bg-white">
-      {/* make a context with just setAdmin  , rewrite hnaldeLogout func in App comp and pass it to context  */}
-      <HeaderContext value={{ logout: handleLogout }}>
-        <Header setAdmin={setAdmin}></Header>
+      <HeaderContext value={{ logout: handleLogout, admin }}>
+        <Header />
       </HeaderContext>
 
       {admin ? <Outlet /> : <Login setAdmin={setAdmin} />}

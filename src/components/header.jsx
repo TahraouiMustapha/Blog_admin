@@ -46,23 +46,28 @@ const Btns = () => {
 
 
     return (
-        <div className="flex items-center gap-8 text-lg">
-            <LinkBtn to={'/'}>Home</LinkBtn>
-            <LinkBtn to={'/newpost'}>New Post</LinkBtn>
+        <>
+            {
+                context.admin
+                && <div className="flex items-center gap-8 text-lg">
+                    <LinkBtn to={'/'}>Home</LinkBtn>
+                    <LinkBtn to={'/newpost'}>New Post</LinkBtn>
 
-            <button
-                disabled={loading}
-                onClick={async () => {
-                    setLoading(true)
-                    await context.logout()
-                    setLoading(false)
-                }}
-                className="bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
-            >
-                {loading ? 'Logging out ..' : 'Logout'}
-            </button>
+                    <button
+                        disabled={loading}
+                        onClick={async () => {
+                            setLoading(true)
+                            await context.logout()
+                            setLoading(false)
+                        }}
+                        className="bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
+                    >
+                        {loading ? 'Logging out ..' : 'Logout'}
+                    </button>
 
-        </div>
+                </div>
+            }
+        </>
     )
 }
 
