@@ -59,7 +59,7 @@ const Btns = () => {
                 }}
                 className="bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
             >
-                Log out
+                {loading ? 'Logging out ..' : 'Logout'}
             </button>
 
         </div>

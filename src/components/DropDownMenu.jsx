@@ -5,8 +5,16 @@ import LinkBtn from "./LinkBtn";
 // icons 
 import { X, House, Info, LogOut } from "lucide-react";
 
-const DropDownMenu = ({ handleClick, handleLogout }) => {
 
+// hooks
+import { useState, useContext } from "react";
+// context 
+import { HeaderContext } from "../context/headerContext";
+
+const DropDownMenu = ({ handleClick }) => {
+    // for logout func
+    const [loading, setLoading] = useState(false)
+    const context = useContext(HeaderContext)
 
     return (
         <div className="bg-gray-500 absolute h-screen w-screen inset-0 flex animate-open-overlay">
@@ -36,9 +44,16 @@ const DropDownMenu = ({ handleClick, handleLogout }) => {
                     <div className="">
                         <LogOut />
                         <button
+                            disabled={loading}
+                            onClick={async () => {
+                                setLoading(true)
+                                await context.logout()
+                                setLoading(false)
+                                handleClick()
+                            }}
                             className="rounded-sm hover:bg-darkerPrimary transition duration-300 ease cursor-pointer"
                         >
-                            Log out
+                            {loading ? 'Logging out ..' : 'Logout'}
                         </button>
                     </div>
 
