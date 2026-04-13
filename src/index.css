@@ -90,7 +90,8 @@ body {
         @apply outline-none border border-brdClr h-10 w-full pl-2.5 rounded-sm focus:border-primary;
     }
 
-    .form .submitBtn {
+    .form .submitBtn,
+    .createPostBtn {
         @apply bg-primary text-white p-2 rounded-sm hover:bg-darkerPrimary transition duration-300 ease-in-out cursor-pointer;
     }
 
@@ -100,6 +101,14 @@ body {
 
     .btnsMenu>* {
         @apply flex items-center gap-2 text-lg text-txtClr stroke-gray-400
+    }
+
+    .isPublishedLabel {
+        @apply flex flex-col gap-3 p-6
+    }
+
+    .isPublishedLabel>p {
+        @apply flex gap-3
     }
 
 }
