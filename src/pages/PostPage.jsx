@@ -78,9 +78,9 @@ const PostPage = () => {
     return (
         <div className="flex-1 flex flex-col md:mx-14 xl:mx-96">
             <div
-                className="h-76 md:mx-9 rounded-b-xl"
+                className="h-76 md:mx-9 rounded-b-xl bg-cover bg-center"
                 style={{ backgroundImage: post?.thumbnailUrl ? `url(${post.thumbnailUrl})` : 'none' }}>
-                image
+
             </div>
 
             <div className="text-4xl/11 font-bold text-txtClr px-9 pt-9 pb-4">{post?.title}</div>
