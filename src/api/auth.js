@@ -1,8 +1,8 @@
-
+import { API_URL } from "./api_url"
 
 const refreshToken = async () => {
     try {
-        const response = await fetch('/api/auth/refresh', {
+        const response = await fetch(`${API_URL}/api/auth/refresh`, {
             method: "POST",
             credentials: 'include'
         })

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+// api_url
+import { API_URL } from "../api/api_url";
 
 const Login = ({ setAdmin }) => {
     const navigate = useNavigate()
@@ -17,7 +19,7 @@ const Login = ({ setAdmin }) => {
         }
 
         try {
-            const res = await fetch('/api/admin/auth', {
+            const res = await fetch(`${API_URL}/api/admin/auth`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -46,7 +48,7 @@ const Login = ({ setAdmin }) => {
 
 
             // get Admin 
-            const resGetAdmin = await fetch('/api/users/me', {
+            const resGetAdmin = await fetch(`${API_URL}/api/users/me`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${accessToken}`

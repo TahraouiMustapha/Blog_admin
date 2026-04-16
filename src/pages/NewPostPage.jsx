@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-
+// api_url
+import { API_URL } from '../api/api_url';
 
 const NewPostPage = () => {
     const editorRef = useRef(null);
@@ -21,7 +22,7 @@ const NewPostPage = () => {
 
         try {
             setLoading(true)
-            const response = await fetch('/api/posts', {
+            const response = await fetch(`${API_URL}/api/posts`, {
                 method: 'POST',
                 headers: {
                     "Authorization": `Bearer ${accessToken}`

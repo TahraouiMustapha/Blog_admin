@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { API_URL } from "../api/api_url"
 
 const useGetPosts = () => {
     const [posts, setPosts] = useState([])
@@ -16,7 +17,7 @@ const useGetPosts = () => {
 
         const fetchPosts = async () => {
             try {
-                const response = await fetch('/api/admin/posts', {
+                const response = await fetch(`${API_URL}/api/admin/posts`, {
                     headers: {
                         "Authorization": `Bearer ${accessToken}`
                     },

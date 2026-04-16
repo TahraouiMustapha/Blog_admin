@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 // helpers
 import refreshToken from "../api/auth";
 
+// api_url
+import { API_URL } from "../api/api_url";
+
 
 const getUser = async (accessToken, signal) => {
-    return await fetch('/api/users/me', {
+    return await fetch(`${API_URL}/api/users/me`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${accessToken}`

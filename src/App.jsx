@@ -10,6 +10,9 @@ import useGetAdmin from "./hooks/useGetAdmin"
 // context
 import { HeaderContext } from "./context/headerContext"
 
+// api_url
+import { API_URL } from "./api/api_url"
+
 function App() {
   const { admin, setAdmin } = useGetAdmin()
 
@@ -18,7 +21,7 @@ function App() {
     if (!accessToken) return;
 
     try {
-      const response = await fetch('/api/auth/logout', {
+      const response = await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${accessToken}`

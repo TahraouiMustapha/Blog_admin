@@ -6,6 +6,9 @@ import { format } from "date-fns"
 import { useParams } from "react-router"
 import { useState } from "react"
 
+// api_url
+import { API_URL } from "../api/api_url"
+
 const Comment = ({ comment, setPostWithComments }) => {
     const [loading, setLoading] = useState(false)
     const date = format(comment.date, "do LLL yyyy")
@@ -17,7 +20,7 @@ const Comment = ({ comment, setPostWithComments }) => {
 
         try {
             setLoading(true)
-            const response = await fetch(`/api/posts/${comment.postId}/comments/${comment.commentId}`, {
+            const response = await fetch(`${API_URL}/api/posts/${comment.postId}/comments/${comment.commentId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${accessToken}`

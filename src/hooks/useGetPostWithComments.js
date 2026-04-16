@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../api/api_url";
 
 const useGetPostWithComments = ({ postId }) => {
     const [postWithComments, setPostWithComments] = useState({})
@@ -14,7 +15,7 @@ const useGetPostWithComments = ({ postId }) => {
             setError(null)
 
             try {
-                const response = await fetch(`/api/posts/${postId}`, { signal: controller.signal })
+                const response = await fetch(`${API_URL}/api/posts/${postId}`, { signal: controller.signal })
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch post')
