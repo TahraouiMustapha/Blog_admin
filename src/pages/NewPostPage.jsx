@@ -17,7 +17,7 @@ const NewPostPage = () => {
         const formData = new FormData(e.target)
 
         if (editorRef.current) {
-            formData.append('text', editorRef.current.getContent({ format: 'text' }));
+            formData.append('text', editorRef.current.getContent());
         }
 
         try {

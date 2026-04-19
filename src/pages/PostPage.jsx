@@ -93,7 +93,9 @@ const PostPage = () => {
             </div>
 
             <div className="p-9">
-                <p className="text-lg/6 text-txtClr">{post?.text}</p>
+                <div
+                    dangerouslySetInnerHTML={{ __html: post?.text }}
+                    className="text-lg/6 text-txtClr" />
             </div>
 
             <div className="p-5 md:px-8 lg:px-24 xl:px-9 flex flex-col gap-6 border-t border-t-brdClr">
