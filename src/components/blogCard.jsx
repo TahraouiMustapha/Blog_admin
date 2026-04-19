@@ -4,6 +4,8 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import { API_URL } from '../api/api_url'
+
 const BlogCard = ({ post }) => {
     const navigate = useNavigate()
     const [publishedState, setPublishedState] = useState(post.published)
@@ -20,7 +22,7 @@ const BlogCard = ({ post }) => {
 
         setLoading(true)
         try {
-            const response = await fetch(`/api/admin/posts/${post.postId}`, {
+            const response = await fetch(`${API_URL}/api/admin/posts/${post.postId}`, {
                 method: "PATCH",
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
@@ -64,9 +66,9 @@ const BlogCard = ({ post }) => {
                         {publishedState ? 'Unpublish' : 'Publish'}
                     </button>
                 </div>
-                <p className="text-sm/4.5 text-txtClr/70 line-clamp-5">
-                    {post.text}
-                </p>
+                <div
+                    dangerouslySetInnerHTML={{ __html: post?.text }}
+                    className="text-sm/4.5 text-txtClr/70 line-clamp-5" />
             </div>
         </div >
     )
