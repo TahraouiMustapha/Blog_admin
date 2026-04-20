@@ -2,10 +2,15 @@ import { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 // api_url
 import { API_URL } from '../api/api_url';
+// components
+import Popup from '../components/popup';
+
 
 const NewPostPage = () => {
     const editorRef = useRef(null);
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
+    const [popupOpen, setPopupOpen] = useState(false)
     // for empty the inputs when submit
     const titleRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -25,6 +30,7 @@ const NewPostPage = () => {
 
         try {
             setLoading(true)
+            setError(null)
             const response = await fetch(`${API_URL}/api/posts`, {
                 method: 'POST',
                 headers: {
@@ -38,17 +44,17 @@ const NewPostPage = () => {
                 throw new Error('Failed to create post')
             }
 
-            const data = await response.json()
-            // console.log(data)
-
-        } catch (err) {
-            console.error(err)
-        } finally {
-            setLoading(false)
-
+            // successfully created post
+            setPopupOpen(true)
             titleRef.current.value = ''
             fileInputRef.current.value = ''
             editorRef.current.setContent('')
+
+        } catch (err) {
+            console.error(err)
+            setError(err.message)
+        } finally {
+            setLoading(false)
         }
 
 
@@ -59,7 +65,8 @@ const NewPostPage = () => {
 
 
     return (
-        <div className='flex-1 mt-5 flex flex-col gap-4'>
+        <div className='flex-1 mt-5 flex flex-col gap-4 relative'>
+            {popupOpen && <Popup message={'Post created successfully'} setPopupOpen={setPopupOpen} />}
             <h1 className="text-5xl font-bold text-center"> <span className="text-primary">New</span> Post</h1>
             <div
                 className='flex-1 flex'
@@ -69,7 +76,7 @@ const NewPostPage = () => {
                     className='flex-1 grid grid-cols-[60%_1fr] grid-rows-[20%_1fr_20%] bigDiv'
                 >
                     <p className='flex flex-col gap-2 p-2'>
-                        <label className='text-lg font-semibold' htmlFor="title">Title</label>
+                        <label className='text-lg font-semibold z-5' htmlFor="title">Title</label>
                         <input
                             ref={titleRef}
                             required
@@ -133,14 +140,15 @@ const NewPostPage = () => {
                     </p>
 
 
-                    <p className='flex justify-center items-start'>
+                    <div className='flex justify-center items-center flex-col'>
                         <button
                             disabled={loading}
                             className='createPostBtn w-20 ml-4'
                         >
                             {loading ? 'Saving ..' : 'Save'}
                         </button>
-                    </p>
+                        <p className='text-red-500 text-sm'>{error}</p>
+                    </div>
                 </form>
             </div>
 
