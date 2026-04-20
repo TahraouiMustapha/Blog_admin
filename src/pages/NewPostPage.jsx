@@ -6,6 +6,9 @@ import { API_URL } from '../api/api_url';
 const NewPostPage = () => {
     const editorRef = useRef(null);
     const [loading, setLoading] = useState(false)
+    // for empty the inputs when submit
+    const titleRef = useRef(null);
+    const fileInputRef = useRef(null);
 
 
     const handleCreateNewPost = async (e) => {
@@ -42,12 +45,18 @@ const NewPostPage = () => {
             console.error(err)
         } finally {
             setLoading(false)
+
+            titleRef.current.value = ''
+            fileInputRef.current.value = ''
+            editorRef.current.setContent('')
         }
 
 
     };
 
     const myApiKey = `${import.meta.env.VITE_TINYMCE_API_KEY}`
+
+
 
     return (
         <div className='flex-1 mt-5 flex flex-col gap-4'>
@@ -62,6 +71,7 @@ const NewPostPage = () => {
                     <p className='flex flex-col gap-2 p-2'>
                         <label className='text-lg font-semibold' htmlFor="title">Title</label>
                         <input
+                            ref={titleRef}
                             required
                             className='outline-none border border-brdClr h-13 w-[70%] pl-2.5 rounded-sm focus:border-primary'
                             type="text"
@@ -87,7 +97,7 @@ const NewPostPage = () => {
                         </fieldset>
 
                         <label className="mt-6 ml-4 inline-block cursor-pointer bg-primary text-white px-4 py-2 rounded-md hover:bg-darkerPrimary transition">
-                            <input type="file" name='image' required />
+                            <input type="file" name='image' required ref={fileInputRef} />
                         </label>
 
                     </div>
